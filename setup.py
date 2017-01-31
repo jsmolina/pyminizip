@@ -1,9 +1,18 @@
 # -*- coding: utf-8 -*-
-from distutils.core import setup, Extension
+import sys
+from setuptools import setup, Extension
+
+SOURCES = ['src/py_minizip.c', 'src/zip.c', 'src/ioapi.c',
+           'zlib123/adler32.c', 'zlib123/compress.c', 'zlib123/crc32.c', 'zlib123/deflate.c', 
+           'zlib123/gzio.c', 'zlib123/infback.c', 'zlib123/inffast.c', 'zlib123/inflate.c', 
+           'zlib123/inftrees.c', 'zlib123/trees.c', 'zlib123/uncompr.c', 'zlib123/zutil.c']
+
+if 'win32' in sys.platform:
+    SOURCES.append('src/iowin32.c')
 
 setup(
     name = 'pyminizip',
-    version = '0.0.2',
+    version = '0.2.1',
     description = 'A minizip wrapper - To create a password encrypted zip file in python.',
     author='Shin Aoyama',
     author_email = "smihica@gmail.com",
@@ -23,13 +32,8 @@ setup(
         ],
     ext_modules=[
         Extension(name="pyminizip",
-                  sources = [
-                'src/py_minizip.c',
-                'src/zip.c',
-                'src/ioapi.c',
-                ],
-                  include_dirs=['src'],
-                  libraries=['z']
+                  sources=SOURCES,
+                  include_dirs=['src','zlib123'],
                   )
         ],
     long_description = """\
@@ -38,6 +42,7 @@ And the zip file is able to extract in WINDOWS.
 
 This is a simple Minizip wrapper of python.
 (http://www.winimage.com/zLibDll/minizip.html)
+
 This software uses zlib.
 License: zlib/libpng License.
 
@@ -54,7 +59,7 @@ install pyminizip
 
 ----------------------------------------------------------------------------
 
-Provides just one function.
+Provides two functions.
 ==============================
 
 pyminizip.compress("/srcfile/path.txt", "/distfile/path.zip", "password", int(compress_level))
@@ -67,6 +72,17 @@ pyminizip.compress("/srcfile/path.txt", "/distfile/path.zip", "password", int(co
 
   Return value:
   - always returns None
+
+pyminizip.compress_multiple([u'pyminizip.so', 'file2.txt'], "file.zip", "1233", 4)
+  Args:
+  1. src file LIST path (list)
+  2. dst file path (string)
+  3. password (string) or None (to create no-password zip)
+  4. compress_level(int) between 1 to 9, 1 (more fast)  <---> 9 (more compress)
+
+  Return value:
+  - always returns None
+
 
 ==============================
 """,

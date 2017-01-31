@@ -1,16 +1,9 @@
-pyminizip:
-
-  Copyright (C) 2013 Shin Aoyama   -- compress()
-  Copyright (C) 2014 Jordi Sesmero -- compress_multiple()
-
-  ------------------------------
-
-  zlib license
-
-  Copyright (C) 1995-2012 Jean-loup Gailly and Mark Adler
+/* puff.h
+  Copyright (C) 2002, 2003 Mark Adler, all rights reserved
+  version 1.7, 3 Mar 2002
 
   This software is provided 'as-is', without any express or implied
-  warranty.  In no event will the authors be held liable for any damages
+  warranty.  In no event will the author be held liable for any damages
   arising from the use of this software.
 
   Permission is granted to anyone to use this software for any purpose,
@@ -25,5 +18,14 @@ pyminizip:
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 
-  Jean-loup Gailly        Mark Adler
-  jloup@gzip.org          madler@alumni.caltech.edu
+  Mark Adler    madler@alumni.caltech.edu
+ */
+
+
+/*
+ * See puff.c for purpose and usage.
+ */
+int puff(unsigned char *dest,           /* pointer to destination pointer */
+         unsigned long *destlen,        /* amount of output space */
+         unsigned char *source,         /* pointer to source data pointer */
+         unsigned long *sourcelen);     /* amount of input available */
